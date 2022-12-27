@@ -21,7 +21,7 @@ import fs from 'fs';
 import { toB32 } from '@diva.exchange/i2p-sam';
 
 const DEFAULT_I2P_LOGLEVEL = 'none';
-const DEFAULT_BASE_DOMAIN = 'testnet.diva.i2p';
+const DEFAULT_BASE_DOMAIN = 'join.testnet.diva.i2p';
 const DEFAULT_HOST_BASE_IP = '127.19.72.';
 const DEFAULT_BASE_IP = '172.19.72.';
 const DEFAULT_PORT = 17468;
@@ -39,7 +39,7 @@ class Build {
     const image_explorer =
       process.env.IMAGE_EXPLORER || 'divax/explorer:current';
 
-    const joinNetwork = process.env.JOIN_NETWORK || '';
+    const joinNetwork = process.env.JOIN_NETWORK || 'diva.i2p/testnet';
 
     const baseDomain = process.env.BASE_DOMAIN || DEFAULT_BASE_DOMAIN;
     const hostBaseIP = process.env.HOST_BASE_IP || DEFAULT_HOST_BASE_IP;
@@ -137,7 +137,7 @@ class Build {
         `        ipv4_address: ${baseIP}200\n\n`;
     }
 
-    const arrayConfig = JSON.parse(fs.readFileSync('genesis/local.config').toString());
+    const arrayConfig = JSON.parse(fs.readFileSync(`build/domains/${baseDomain}/genesis/local.config`).toString());
 
     let seq = 1;
     arrayConfig.forEach((config: any) => {
@@ -227,7 +227,7 @@ class Build {
       `        - subnet: ${baseIP}0/24\n\n` +
       (volumes ? 'volumes:\n' + volumes : '');
 
-    fs.writeFileSync('diva.yml', yml);
+    fs.writeFileSync(`build/domains/${baseDomain}/diva.yml`, yml);
   }
 }
 

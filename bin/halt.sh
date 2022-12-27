@@ -30,7 +30,7 @@ source "${PROJECT_PATH}"/bin/util/echos.sh
 source "${PROJECT_PATH}"/bin/util/helpers.sh
 
 # env vars
-DIVA_TESTNET=${DIVA_TESTNET:-0}
+DIVA_TESTNET=${DIVA_TESTNET:-1}
 BASE_DOMAIN=${BASE_DOMAIN:-testnet.local}
 
 # Handle joining

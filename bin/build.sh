@@ -31,7 +31,7 @@ source "${PROJECT_PATH}"/bin/util/helpers.sh
 
 # env vars
 I2P_LOGLEVEL=${I2P_LOGLEVEL:-none}
-DIVA_TESTNET=${DIVA_TESTNET:-0}
+DIVA_TESTNET=${DIVA_TESTNET:-1}
 JOIN_NETWORK=${JOIN_NETWORK:-}
 BASE_DOMAIN=${BASE_DOMAIN:-testnet.local}
 SIZE_NETWORK=${SIZE_NETWORK:-7}
@@ -104,12 +104,12 @@ then
 
   if [[ -f ./genesis-i2p.yml ]]
   then
-    sudo SIZE_NETWORK=${SIZE_NETWORK} docker compose -f ./genesis-i2p.yml down --volumes
+    sudo docker compose -f ./genesis-i2p.yml down --volumes
   fi
 
   cp "${PROJECT_PATH}"/build/genesis-i2p.yml ./genesis-i2p.yml
-  sudo SIZE_NETWORK=${SIZE_NETWORK} docker compose -f ./genesis-i2p.yml pull
-  sudo SIZE_NETWORK=${SIZE_NETWORK} docker compose -f ./genesis-i2p.yml up -d
+  sudo docker compose -f ./genesis-i2p.yml pull
+  sudo docker compose -f ./genesis-i2p.yml up -d
 
   running "Waiting for key generation"
   # wait until all keys are created
@@ -119,7 +119,7 @@ then
   done
 
   # shut down the genesis container and clean up
-  sudo SIZE_NETWORK=${SIZE_NETWORK} docker compose -f ./genesis-i2p.yml down --volumes
+  sudo docker compose -f ./genesis-i2p.yml down --volumes
   rm ./genesis-i2p.yml
 
   # handle joining
@@ -134,13 +134,4 @@ fi
 
 running "Creating diva.yml file"
 
-JOIN_NETWORK=${JOIN_NETWORK} \
-  SIZE_NETWORK=${SIZE_NETWORK} \
-  BASE_DOMAIN=${BASE_DOMAIN} \
-  BASE_IP=${BASE_IP} \
-  PORT=${PORT} \
-  NODE_ENV=${NODE_ENV} \
-  LOG_LEVEL=${LOG_LEVEL} \
-  "${PROJECT_PATH}"/node_modules/.bin/ts-node "${PROJECT_PATH}"/build/build.ts
-
-ok "Created diva.yml file"
+warn "Run '${PROJECT_PATH}/node_modules/.bin/ts-node ${PROJECT_PATH}/build/build.ts' manually"

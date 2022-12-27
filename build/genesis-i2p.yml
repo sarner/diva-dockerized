@@ -53,7 +53,7 @@ services:
       GENESIS: 1
       GENESIS_PATH: /genesis/block.v5.json
       GENESIS_CONFIG_PATH: /genesis/local.config
-      SIZE_NETWORK: ${SIZE_NETWORK}
+      SIZE_NETWORK: 1
       NODE_ENV: development
       LOG_LEVEL: trace
       IP: 10.19.77.21

@@ -29,6 +29,14 @@ PROJECT_PATH=$( pwd )
 source "${PROJECT_PATH}"/bin/util/echos.sh
 source "${PROJECT_PATH}"/bin/util/helpers.sh
 
+# env vars
+DIVA_TESTNET=${DIVA_TESTNET:-1}
+
+# Handle testnet
+if [[ ${DIVA_TESTNET} -gt 0 ]]
+then
+  BASE_DOMAIN=join.testnet.diva.i2p
+fi
 BASE_DOMAIN=${BASE_DOMAIN:-testnet.local}
 NO_BOOTSTRAPPING=${NO_BOOTSTRAPPING:1}
 
@@ -39,4 +47,4 @@ then
   exit 3
 fi
 
-BASE_DOMAIN=${BASE_DOMAIN} bin/halt.sh && BASE_DOMAIN=${BASE_DOMAIN} NO_BOOTSTRAPPING=${NO_BOOTSTRAPPING} bin/start.sh
+bin/halt.sh && bin/start.sh
